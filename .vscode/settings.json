@@ -1,0 +1,7 @@
+{
+    "files.associations": {
+        "*.lex": "lex",
+        "unordered_map": "cpp",
+        "iostream": "cpp"
+    }
+}
