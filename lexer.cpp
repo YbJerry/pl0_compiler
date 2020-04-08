@@ -2,6 +2,7 @@
 
 string tokenString;
 int lineNo = 1, charNo = 1;
+extern ifstream fin;
 
 // 有限自动机状态
 enum class DFAStatus{
@@ -10,19 +11,19 @@ enum class DFAStatus{
 };
 
 // 保留关键字
-static unordered_map<string, token> reservedWords = {
-    {"begin",   token::BEGINSYM},
-    {"end",     token::ENDSYM},
-    {"if",      token::IFSYM},
-    {"then",    token::THENSYM},
-    {"while",   token::WHILESYM},
-    {"write",   token::WRITESYM},
-    {"read",    token::READSYM},
-    {"do",      token::DOSYM},
-    {"call",    token::CALLSYM},
-    {"const",   token::CONSTSYM},
-    {"var",     token::VARSYM},
-    {"proc",    token::PROCSYM},
+static unordered_map<string, Token> reservedWords = {
+    {"begin",   Token::BEGINSYM},
+    {"end",     Token::ENDSYM},
+    {"if",      Token::IFSYM},
+    {"then",    Token::THENSYM},
+    {"while",   Token::WHILESYM},
+    {"write",   Token::WRITESYM},
+    {"read",    Token::READSYM},
+    {"do",      Token::DOSYM},
+    {"call",    Token::CALLSYM},
+    {"const",   Token::CONSTSYM},
+    {"var",     Token::VARSYM},
+    {"proc",    Token::PROCSYM},
 };
 
 char getCh(){
@@ -33,9 +34,12 @@ void unGetCh(char ch){
     cin.unget();
 }
 
-token getToken(){
+Token getToken(){
+    if(fin){
+        cin.rdbuf(fin.rdbuf());
+    }
     DFAStatus status = DFAStatus::START;
-    token res;
+    Token res;
     tokenString.clear();
     while(status != DFAStatus::DONE){
         int ch = getCh();
@@ -66,8 +70,10 @@ token getToken(){
                 break;
             case EOF:
                 status = DFAStatus::DONE;
-                res = token::NUL;
+                res = Token::NUL;
+                break;
             default:
+                unGetCh(ch);
                 status = DFAStatus::NONBLANK;
                 break;
             }
@@ -91,13 +97,13 @@ token getToken(){
             do{
                 if(!isalnum(ch))
                     break;
-                tokenString.append(1, ch);
+                tokenString.append(1, tolower(ch));
             }while(ch = getCh());
             unGetCh(ch);
             if(reservedWords.find(tokenString) != reservedWords.end())
                 res = reservedWords[tokenString];
             else
-                res = token::IDENT;
+                res = Token::IDENT;
             status = DFAStatus::DONE;
             break;
         case DFAStatus::NUMBER:
@@ -107,71 +113,71 @@ token getToken(){
                 tokenString.append(1, ch);
             }while(ch = getCh());
             unGetCh(ch);
-            res = token::NUMBER;
+            res = Token::NUMBER;
             status = DFAStatus::DONE;
             break;
         case DFAStatus::OP:
             switch (ch)
             {
             case '+':
-                res = token::PLUS;
+                res = Token::PLUS;
                 break;
             case '-':
-                res = token::MINUS;
+                res = Token::MINUS;
                 break;
             case '*':
-                res = token::TIMES;
+                res = Token::TIMES;
                 break;
             case '/':
-                res = token::SLASH;
+                res = Token::SLASH;
                 break;
             case '=':
-                res = token::EQL;
+                res = Token::EQL;
                 break;
             case '#':
-                res = token::NEQ;
+                res = Token::NEQ;
                 break;
             case '<':
                 if((ch = getCh()) == '='){
-                    res = token::LEQ;
+                    res = Token::LEQ;
                     break;
                 }
                 unGetCh(ch);
-                res = token::LSS;
+                res = Token::LSS;
                 break;
             case '>':
                 if((ch = getCh()) == '='){
-                    res = token::GEQ;
+                    res = Token::GEQ;
                     break;
                 }
                 unGetCh(ch);
-                res = token::GTR;
+                res = Token::GTR;
                 break;
             case ':':
                 if((ch = getCh()) == '='){
-                    res = token::GEQ;
+                    res = Token::GEQ;
                     break;
                 }
                 unGetCh(ch);
-                res = token::ERROR;
+                res = Token::ERROR;
                 break;
             case '(':
-                res = token::LPAREN;
+                res = Token::LPAREN;
                 break;
             case ')':
-                res = token::RPAREN;
+                res = Token::RPAREN;
                 break;
             case ',':
-                res = token::COMMA;
+                res = Token::COMMA;
                 break;
             case ';':
-                res = token::SEMICOLON;
+                res = Token::SEMICOLON;
                 break;
             case '.':
-                res = token::PERIOD;
+                res = Token::PERIOD;
                 break;
             default:
-                res = token::ERROR;
+                res = Token::ERROR;
                 break;
             }
             status = DFAStatus::DONE;

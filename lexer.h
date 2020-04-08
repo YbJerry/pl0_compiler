@@ -2,11 +2,12 @@
 #define _LEXER_H_
 
 #include <iostream>
+#include <fstream>
 #include <cctype>
 #include <string>
 #include <unordered_map>
 #include "globals.h"
 
-token getToken();
+Token getToken();
 
 #endif

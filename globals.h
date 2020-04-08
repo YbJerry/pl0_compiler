@@ -5,7 +5,7 @@ using namespace std;
 
 const int TABDISTANCE = 4;
 
-enum class token{
+enum class Token{
     NUL, IDENT, NUMBER, PLUS, MINUS,
     TIMES, SLASH, ODDSYM, EQL, NEQ,
     LSS, LEQ, GTR, GEQ, LPAREN,

@@ -1,0 +1,7 @@
+const num = 100;
+var a1, b2;
+begin
+    read(A1);
+    b2 := a1 + num;
+    write(A1, B2);
+end.
