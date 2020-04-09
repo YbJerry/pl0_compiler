@@ -3,11 +3,12 @@
 string tokenString;
 int lineNo = 1, charNo = 1;
 extern ifstream fin;
+int commentLevel = 0;
 
 // 有限自动机状态
 enum class DFAStatus{
     DONE = 0, START, BLANK, NEWLINE, NONBLANK,
-    NUMBER, ALNUM, OP
+    NUMBER, ALNUM, OP, COMMENT
 };
 
 // 保留关键字
@@ -181,6 +182,22 @@ Token getToken(){
                 break;
             }
             status = DFAStatus::DONE;
+            if(ch == '{'){
+                ++commentLevel;
+                status = DFAStatus::COMMENT;
+            }
+            break;
+        case DFAStatus::COMMENT:
+            do{
+                if(ch == '}'){
+                    --commentLevel;
+                }else if(ch == '{'){
+                    ++commentLevel;
+                }
+                ch = getCh();
+            }while(commentLevel);
+            unGetCh(ch);
+            status = DFAStatus::START;
             break;
         default:
             cerr << "Unknown lexical parser status!" << endl;
