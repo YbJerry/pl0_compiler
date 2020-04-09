@@ -59,12 +59,12 @@ Token getToken(){
                 status = DFAStatus::BLANK;
                 break;
             // 可以处理多种系统下换行标志
-            case '\n':
+            case '\r':
                 ch = getCh();
-                if(ch != '\r')
+                if(ch != '\n')
                     unGetCh(ch);
             // 此处无break
-            case '\r':
+            case '\n':
                 status = DFAStatus::DONE;
                 charNo = 1;
                 ++lineNo;
