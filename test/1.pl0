@@ -1,4 +1,5 @@
 const num = 100;
+~~
 var a1, b2;
 begin
     read(A1);

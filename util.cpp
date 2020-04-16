@@ -1,6 +1,7 @@
 #include "util.h"
 
 extern string tokenString;
+extern int lineNo, charNo;
 
 void countIdent(){
     unordered_map<string, int> identSum;
@@ -99,6 +100,14 @@ pair<string, string> transToken(Token token){
         return resTrans("SEMICOLON", ":");
     case Token::PERIOD:
         return resTrans("PERIOD", ".");
+    case Token::ERROR:{
+        string errorInfo;
+        errorInfo += to_string(lineNo);
+        errorInfo += ":";
+        errorInfo += to_string(charNo);
+        return resTrans("\033[41;36m ERROR \33[0m", errorInfo);
+    }
+        
     default:
         break;
     }

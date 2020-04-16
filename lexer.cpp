@@ -29,10 +29,12 @@ static unordered_map<string, Token> reservedWords = {
 };
 
 char getCh(){
+    ++charNo;
     return cin.get();
 }
 
 void unGetCh(char ch){
+    --charNo;
     cin.unget();
 }
 
