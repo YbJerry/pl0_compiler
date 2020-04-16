@@ -68,7 +68,7 @@ Token getToken(){
                     unGetCh(ch);
             // 此处无break
             case '\n':
-                status = DFAStatus::DONE;
+                status = DFAStatus::BLANK;
                 charNo = 1;
                 ++lineNo;
                 break;

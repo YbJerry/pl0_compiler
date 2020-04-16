@@ -1,3 +1,4 @@
+{ test1 program }
 const num = 100;
 ~~
 var a1, b2;
