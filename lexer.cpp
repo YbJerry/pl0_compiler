@@ -13,18 +13,19 @@ enum class DFAStatus{
 
 // 保留关键字
 static unordered_map<string, Token> reservedWords = {
-    {"begin",   Token::BEGINSYM},
-    {"end",     Token::ENDSYM},
-    {"if",      Token::IFSYM},
-    {"then",    Token::THENSYM},
-    {"while",   Token::WHILESYM},
-    {"write",   Token::WRITESYM},
-    {"read",    Token::READSYM},
-    {"do",      Token::DOSYM},
-    {"call",    Token::CALLSYM},
-    {"const",   Token::CONSTSYM},
-    {"var",     Token::VARSYM},
-    {"proc",    Token::PROCSYM},
+    {"begin",       Token::BEGINSYM},
+    {"end",         Token::ENDSYM},
+    {"if",          Token::IFSYM},
+    {"then",        Token::THENSYM},
+    {"while",       Token::WHILESYM},
+    {"write",       Token::WRITESYM},
+    {"read",        Token::READSYM},
+    {"do",          Token::DOSYM},
+    {"call",        Token::CALLSYM},
+    {"const",       Token::CONSTSYM},
+    {"var",         Token::VARSYM},
+    {"odd",         Token::ODDSYM},
+    {"procedure",   Token::PROCSYM},
 };
 
 char getCh(){

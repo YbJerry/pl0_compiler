@@ -15,7 +15,7 @@ int main(int argc, char **argv){
         }
     }
 
-    countIdent();
+    printToken();
 
     return 0;
 }
