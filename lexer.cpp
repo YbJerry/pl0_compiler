@@ -54,11 +54,10 @@ Token getToken(){
             switch (ch)
             {
             case ' ':
-                ++charNo;
                 status = DFAStatus::BLANK;
                 break;
             case '\t':
-                charNo = (charNo / TABDISTANCE + 1) * TABDISTANCE;
+                charNo = ((charNo) / TABDISTANCE + 1) * TABDISTANCE + 1;
                 status = DFAStatus::BLANK;
                 break;
             // 可以处理多种系统下换行标志
@@ -159,7 +158,7 @@ Token getToken(){
                 break;
             case ':':
                 if((ch = getCh()) == '='){
-                    res = Token::GEQ;
+                    res = Token::BECOMES;
                     break;
                 }
                 unGetCh(ch);

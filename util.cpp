@@ -97,7 +97,7 @@ pair<string, string> transToken(Token token){
     case Token::COMMA:
         return resTrans("COMMA", ",");
     case Token::SEMICOLON:
-        return resTrans("SEMICOLON", ":");
+        return resTrans("SEMICOLON", ";");
     case Token::PERIOD:
         return resTrans("PERIOD", ".");
     case Token::ERROR:{
