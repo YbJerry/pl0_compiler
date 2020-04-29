@@ -32,7 +32,7 @@ public:
         return make_pair(s1, s2);
     }
 
-private:
+protected:
     // DFA's States
     enum class DFAStates {
         DONE = 0,

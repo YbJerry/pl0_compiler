@@ -1,25 +1,25 @@
 #include <iostream>
 #include <fstream>
+#include <sstream>
 #include "globals.h"
 #include "lexer.h"
-#include "util.h"
-
-ifstream fin;
+#include "parser.h"
 
 int main(int argc, char **argv){
-    Lexer *lexer;
+    ifstream fin;
+    stringstream sharedIO;
+    Parser *parser;
+
     if(argc > 1){
         fin.open(argv[1]);
         if(!fin){
             cerr << "Target filename don't exist!" << endl;
             return 0;
         }
-        lexer = new Lexer(fin);
+        parser = new Parser(fin);
     }else{
-        lexer = new Lexer();
+        parser = new Parser();
     }
-
-    lexer->printToken();
-
+    parser->parseProgram();
     return 0;
 }
