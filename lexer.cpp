@@ -240,9 +240,17 @@ pair<string, string> Lexer::transToken(Token token){
     case Token::ODDSYM:
         return resTrans("ODDSYM", "odd");
     case Token::IDENT:
+        #ifdef DEBUG
         return resTrans("IDENT", tokenString);
+        #else
+        return resTrans("IDENT", "ident");
+        #endif
     case Token::NUMBER:
+        #ifdef DEBUG
         return resTrans("NUMBER", tokenString);
+        #else
+        return resTrans("NUMBER", "number");
+        #endif
     case Token::PLUS:
         return resTrans("PLUS", "+");
     case Token::MINUS:

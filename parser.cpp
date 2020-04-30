@@ -1,12 +1,14 @@
 #include "parser.h"
 
 void Parser::parseProgram(){
+    LLState = NoTerminal::PROG;
     matchToken(Token::NUL);
     parseSubProgram();
     matchToken(Token::PERIOD);
 }
 
 void Parser::parseSubProgram(){
+    LLState = NoTerminal::SUBPROG;
     if(token == Token::CONSTSYM){
         matchToken(Token::CONSTSYM);
         parseConstDeclaration();
@@ -39,16 +41,19 @@ void Parser::parseSubProgram(){
 }
 
 void Parser::parseConstDeclaration(){
+    LLState = NoTerminal::CONSTDEC;
     matchToken(Token::IDENT);
     matchToken(Token::EQL);
     matchToken(Token::NUMBER);
 }
 
 void Parser::parseVarDeclaration(){
+    LLState = NoTerminal::VARDEC;
     matchToken(Token::IDENT);
 }
      
 void Parser::parseStatement(){
+    LLState = NoTerminal::STATEMENT;
     switch (token)
     {
     case Token::IDENT:
@@ -101,16 +106,19 @@ void Parser::parseStatement(){
         }
         matchToken(Token::ENDSYM);
         break;
-    // if statement is empty, its follow set is . and end
+    // if statement is empty, its follow set is . and ; and end
     case Token::ENDSYM:
+    case Token::SEMICOLON:
     case Token::PERIOD:
         break;
     default:
+        matchToken(Token::ERROR);
         break;
     }
 }
 
 void Parser::parseCondition(){
+    LLState = NoTerminal::CONDITION;
     switch(token){
     case Token::ODDSYM:
         matchToken(Token::ODDSYM);
@@ -146,8 +154,18 @@ void Parser::parseCondition(){
 }
 
 void Parser::parseExpression(){
+    LLState = NoTerminal::EXPRESSION;
     if(token == Token::PLUS || token == Token::MINUS)
         matchToken(token);
+    parseFactor();
+    while(token == Token::PLUS || token == Token::MINUS){
+        matchToken(token);
+        parseFactor();
+    }
+}
+
+void Parser::parseTerm(){
+    LLState = NoTerminal::TERM;
     parseFactor();
     while(token == Token::TIMES || token == Token::SLASH){
         matchToken(token);
@@ -156,6 +174,7 @@ void Parser::parseExpression(){
 }
 
 void Parser::parseFactor(){
+    LLState = NoTerminal::FACTOR;
     switch (token)
     {
     case Token::IDENT:
@@ -166,17 +185,36 @@ void Parser::parseFactor(){
         matchToken(Token::LPAREN);
         parseExpression();
         matchToken(Token::RPAREN);
+        break;
     default:
         matchToken(Token::ERROR);
         break;
     }
 }
 
-void Parser::matchToken(const Token &token){
+bool Parser::matchToken(const Token &token){
     if(token != this->token){
-        cout << "\033[41;36m ERROR " <<lineNo << ":" << charNo << "\33[0m" << ": syntax error!" << endl;
-        exit(0);
-    }else{
-        this->token = getToken();
+        cout << "\033[41;36m ERROR " <<lineNo << ":" << charNo << "\33[0m" << ": expect a \"" << transToken(token).second << "\"" << endl;
+        errorRecovery(LLState);
+        if(token == this->token){
+            this->token = getToken();
+        }
+        return false;
     }
+    this->token = getToken();
+    if(this->token == Token::ERROR){
+        cout << "\033[41;36m ERROR " <<lineNo << ":" << charNo << "\33[0m" << ": an unexpected token" << endl;
+        do{
+            this->token = getToken();
+        }while(this->token == Token::ERROR);
+        return false;
+    }
+    return true;
+}
+
+void Parser::errorRecovery(const NoTerminal &nt){
+    const vector<Token> &followSet = followSets.at(nt);
+    do{
+        token = getToken();
+    } while (find(followSet.begin(), followSet.end(), token) == followSet.end());
 }
