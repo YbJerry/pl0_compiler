@@ -3,6 +3,6 @@ const num = 100;
 var a1, b2;
 begin
 	read(A1);
-	b2 := a1 + num;
+	b2 := - a + (-(b) * 3);
 	write(A1, B2);
 end.

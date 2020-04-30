@@ -1,5 +1,9 @@
 var a, b, c, r;
 {{ 将a, b, c排序 }}
+procedure func;
+	begin
+		q := c;
+	end;
 begin
 	read(a);
 	read(b);
@@ -22,6 +26,8 @@ begin
 			a := b;
 			b := r;
 		end;
+	while a > b do
+		call func;
 	write(a);
 	write(b);
 	write(c);

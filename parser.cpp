@@ -157,10 +157,10 @@ void Parser::parseExpression(){
     LLState = NoTerminal::EXPRESSION;
     if(token == Token::PLUS || token == Token::MINUS)
         matchToken(token);
-    parseFactor();
+    parseTerm();
     while(token == Token::PLUS || token == Token::MINUS){
         matchToken(token);
-        parseFactor();
+        parseTerm();
     }
 }
 
@@ -201,7 +201,16 @@ bool Parser::matchToken(const Token &token){
         }
         return false;
     }
+    auto prev = this->token;
     this->token = getToken();
+    if(prev == Token::PERIOD && this->token == Token::NUL){
+        return true;
+    }
+    if(this->token == Token::NUL){
+        cout << "\033[41;36m ERROR " <<lineNo << ":" << charNo << "\33[0m" << ": code ends without '.'" << endl;
+        this->token = Token::PERIOD;
+        return false;
+    }
     if(this->token == Token::ERROR){
         cout << "\033[41;36m ERROR " <<lineNo << ":" << charNo << "\33[0m" << ": an unexpected token" << endl;
         do{
