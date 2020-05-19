@@ -5,6 +5,8 @@
 #include <vector>
 #include "globals.h"
 #include "lexer.h"
+#include "symtab.h"
+#include "codegen.h"
 #include <algorithm>
 
 class Parser : public Lexer{
@@ -20,7 +22,6 @@ private:
         PROG, SUBPROG, CONSTDEC, VARDEC, STATEMENT, CONDITION, EXPRESSION, TERM, FACTOR
     };
 
-
     void parseSubProgram();
     void parseConstDeclaration();
     void parseVarDeclaration();
@@ -35,6 +36,13 @@ private:
 
     Token token = Token::NUL;
     NoTerminal LLState = NoTerminal::PROG;
+    int level = 0;
+    int DXAddr = 0;
+    Symtab sTable;
+    CodeGen cGen;
+
+    // A var for parser to judge whether codeGener should use temp var.
+    bool isNotTemp = false;
 
     const unordered_map<NoTerminal, vector<Token>> firstSets =
         {

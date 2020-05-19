@@ -2,7 +2,10 @@
 const num = 100;
 var a1, b2;
 begin
-	read(A1);
-	b2 := - a + (-(b) * 3);
-	write(A1, B2);
+	if odd num then
+	begin
+		read(A1);
+		b2 := - a + b * c * d + e - (-f) / g;
+		write(A1, B2);
+	end;
 end.

@@ -1,8 +1,19 @@
 {
     "files.associations": {
+        "*.cjson": "jsonc",
+        "*.wxs": "javascript",
+        "*.wxss": "css",
+        "*.c": "c",
         "*.lex": "lex",
         "unordered_map": "cpp",
         "iostream": "cpp",
-        "iosfwd": "cpp"
+        "iosfwd": "cpp",
+        "*.tcc": "cpp",
+        "deque": "cpp",
+        "string": "cpp",
+        "vector": "cpp",
+        "ostream": "cpp",
+        "iomanip": "cpp",
+        "type_traits": "cpp"
     }
 }

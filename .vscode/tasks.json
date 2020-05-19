@@ -7,6 +7,7 @@
             "args": [
                 "-g",
                 "${workspaceRoot}/lexer.cpp",
+                "${workspaceRoot}/symtab.cpp",
                 "${workspaceRoot}/parser.cpp",
                 "${workspaceRoot}/main.cpp",
                 "-o",
