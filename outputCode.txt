@@ -1,88 +1,14 @@
-; var a , b , c , r ; 
-; procedure func 
-; ; begin 
-; q := c 
-  __func:
-    _t1 := c
-    q := _t1
-; ; end ; 
-    return
+; const num = 100 ; 
+; var a1 , b2 ; 
 ; begin 
-; read ( a ) 
-    read a
-; ; read ( b ) 
-    read b
-; ; read ( c ) 
-    read c
-; ; if a > b then 
+; num := 10 
+    _t1 := 10
+    num := _t1
+; ; a := a * ( b + c ) 
     _t2 := a
-    _t4 := b
-    _t5 := _t2 > _t4
-    if _t5 goto _L0
-    goto _L1
-  _L0:
-; begin 
-; r := a 
-    _t6 := a
-    r := _t6
-; ; a := b 
-    _t7 := b
-    a := _t7
-; ; b := r 
-    _t8 := r
-    b := _t8
-  _L1:
-; ; end ; if b > c then 
-    _t9 := b
-    _t11 := c
-    _t12 := _t9 > _t11
-    if _t12 goto _L2
-    goto _L3
-  _L2:
-; begin 
-; r := b 
-    _t13 := b
-    r := _t13
-; ; b := c 
-    _t14 := c
-    b := _t14
-; ; c := r 
-    _t15 := r
-    c := _t15
-  _L3:
-; ; end ; if a > b then 
-    _t16 := a
-    _t18 := b
-    _t19 := _t16 > _t18
-    if _t19 goto _L4
-    goto _L5
-  _L4:
-; begin 
-; r := a 
-    _t20 := a
-    r := _t20
-; ; a := b 
-    _t21 := b
-    a := _t21
-; ; b := r 
-    _t22 := r
-    b := _t22
-  _L5:
-; ; end ; while a > b do call func 
-  _L6:
-    _t23 := a
-    _t25 := b
-    _t26 := _t23 > _t25
-    if _t26 goto _L7
-    goto _L8
-    call __func
-; 
-    goto _L6
-  _L8:
-; ; write ( a ) 
-    _t28 := a
-    write _t28
-; ; write ( b ) 
-    _t30 := b
-    write _t30
-; ; write ( c ) 
+    _t3 := b
+    _t4 := c
+    _t5 := _t3 + _t4
+    _t6 := _t2 * _t5
+    a := _t6
+; ; end . 

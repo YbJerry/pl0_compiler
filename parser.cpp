@@ -5,6 +5,8 @@ void Parser::parseProgram(){
     matchToken(Token::NUL);
     parseSubProgram();
     matchToken(Token::PERIOD);
+    cGen.genComment();
+    cGen.commit();
 }
 
 void Parser::parseSubProgram(){
@@ -112,15 +114,15 @@ void Parser::parseStatement(){
         break;
     }
     case Token::WHILESYM:{
-        //  L0:
-        //  If t1 goto L1
-        //  goto L2
-        //  L1:
-        //  ...
-        //  statement
-        //  ...
-        //  goto L0
-        //  L2:
+    //  L0:
+    //  If t1 goto L1
+    //  goto L2
+    //  L1:
+    //  ...
+    //  statement
+    //  ...
+    //  goto L0
+    //  L2:
         string L0 = cGen.getLabel();
         cGen.genLabel(L0);
         cGen.addLabelNum();
@@ -133,6 +135,7 @@ void Parser::parseStatement(){
         string L2 = cGen.getLabel();
         cGen.addLabelNum();
         cGen.genGoto(L2);
+        cGen.genLabel(L1);
         matchToken(Token::DOSYM);
         parseStatement();
         cGen.genComment();
@@ -277,7 +280,6 @@ void Parser::parseExpression(){
     string op, arg1, arg2, out;
     LLState = NoTerminal::EXPRESSION;
 
-    arg1 = cGen.getTemp();
     if(token == Token::MINUS){
         matchToken(token);
         parseTerm();
@@ -289,8 +291,10 @@ void Parser::parseExpression(){
     }else if(token == Token::PLUS){
         matchToken(token);
         parseTerm();
+        arg1 = cGen.getTemp();
     }else{
         parseTerm();
+        arg1 = cGen.getTemp();
     }
     
     while(token == Token::PLUS || token == Token::MINUS){
@@ -354,8 +358,8 @@ void Parser::parseFactor(){
         parseExpression();
         matchToken(Token::RPAREN);
         string arg = cGen.getTemp();
-        cGen.addTempNum();
-        cGen.genAssign(arg, cGen.getTemp());
+        // cGen.addTempNum();
+        // cGen.genAssign(arg, cGen.getTemp());
         // cGen.genComment();
         // cGen.commit();
         break;
