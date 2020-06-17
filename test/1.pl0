@@ -2,6 +2,16 @@
 const num = 100;
 var a1, b2;
 begin
-	num := 10;
-	a := a * (b + c);
+	while a > b do
+	begin
+		if a > b then
+			begin
+				if a > b then
+					begin
+						r := a;
+						a := b;
+						b := r;
+					end;
+			end;
+	end;
 end.

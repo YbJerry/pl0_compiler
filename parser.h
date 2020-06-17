@@ -7,6 +7,7 @@
 #include "lexer.h"
 #include "symtab.h"
 #include "codegen.h"
+#include "codeopt.h"
 #include <algorithm>
 
 class Parser : public Lexer{
@@ -39,7 +40,7 @@ private:
     int level = 0;
     int DXAddr = 0;
     Symtab sTable;
-    CodeGen cGen;
+    CodeOpt cGen;
 
     // A var for parser to judge whether codeGener should use temp var.
     bool isNotTemp = false;

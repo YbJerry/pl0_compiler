@@ -1,14 +1,42 @@
 ; const num = 100 ; 
 ; var a1 , b2 ; 
 ; begin 
-; num := 10 
-    _t1 := 10
-    num := _t1
-; ; a := a * ( b + c ) 
-    _t2 := a
+; while a > b do begin 
+; if a > b then 
+  _L0:
+    _t1 := a
     _t3 := b
-    _t4 := c
-    _t5 := _t3 + _t4
-    _t6 := _t2 * _t5
-    a := _t6
+    _t4 := _t1 > _t3
+    if _t4 goto _L1
+    goto _L2
+  _L1:
+    _t6 := a
+    _t8 := b
+    _t9 := _t6 > _t8
+    if _t9 goto _L3
+    goto _L4
+  _L3:
+; begin 
+; if a > b then 
+    _t10 := a
+    _t12 := b
+    _t13 := _t10 > _t12
+    if _t13 goto _L5
+    goto _L6
+  _L5:
+; begin 
+; r := a 
+    _t14 := a
+    r := _t14
+; ; a := b 
+    _t15 := b
+    a := _t15
+; ; b := r 
+    _t16 := r
+    b := _t16
+  _L6:
+  _L4:
+; ; end ; end ; end 
+    goto _L0
+  _L2:
 ; ; end . 
