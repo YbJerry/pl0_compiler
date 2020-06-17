@@ -1,0 +1,28 @@
+  _L0:
+    _t1 := a
+    _t3 := b
+    _t4 := _t1 > _t3
+    if _t4 goto _L1
+    goto _L2
+  _L1:
+    _t6 := a
+    _t8 := b
+    _t9 := _t6 > _t8
+    if _t9 goto _L3
+    goto _L4
+  _L3:
+    _t10 := a
+    _t12 := b
+    _t13 := _t10 > _t12
+    if _t13 goto _L5
+    goto _L0
+  _L5:
+    _t14 := a
+    r := _t14
+    _t15 := b
+    a := _t15
+    _t16 := r
+    b := _t16
+  _L4:
+    goto _L0
+  _L2:

@@ -7,6 +7,10 @@ void Parser::parseProgram(){
     matchToken(Token::PERIOD);
     cGen.genComment();
     cGen.commit();
+
+    cGen.optimizeGoto();
+    cGen.buildDAG();
+    cGen.outputOptimizedCode();
 }
 
 void Parser::parseSubProgram(){
